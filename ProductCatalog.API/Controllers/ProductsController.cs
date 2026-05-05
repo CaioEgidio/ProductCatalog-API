@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.API.DTOs;
 using ProductCatalog.Domain.Entities;
+using ProductCatalog.API.Application.UseCases.CreateProduct;
 
 namespace ProductCatalog.API.Controllers;
 
@@ -8,6 +9,13 @@ namespace ProductCatalog.API.Controllers;
 [Route("products")] // defino a url base 
 public class ProductsController : ControllerBase
 {
+    private readonly CreateProductHandler _handler;
+
+    public ProductsController(CreateProductHandler handler)
+    {
+        _handler = handler;
+    }
+    
     [HttpGet] // Requisição do tipo GET
     public IActionResult Get()
     {
@@ -21,7 +29,7 @@ public class ProductsController : ControllerBase
     [HttpPost] // Define um requisição do tipo POST 
     public IActionResult Create([FromBody] CreateProductRequest request)
     {
-        var product = new Product(request.Nome, request.Descricao, request.Preco, Guid.NewGuid());
+        var product = _handler.Handle(request);
         return Ok(product);
     }
 }
