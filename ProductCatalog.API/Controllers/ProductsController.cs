@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProductCatalog.API.DTOs;
+using ProductCatalog.Application.DTOs;
+using ProductCatalog.Application.UseCases.CreateProduct;
 using ProductCatalog.Domain.Entities;
-using ProductCatalog.API.Application.UseCases.CreateProduct;
 
 namespace ProductCatalog.API.Controllers;
 

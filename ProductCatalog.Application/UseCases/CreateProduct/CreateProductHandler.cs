@@ -1,7 +1,7 @@
 ﻿using ProductCatalog.Domain.Entities;
-using ProductCatalog.API.DTOs;
+using ProductCatalog.Application.DTOs;
   
-namespace ProductCatalog.API.Application.UseCases.CreateProduct;
+namespace ProductCatalog.Application.UseCases.CreateProduct;
 
 public class CreateProductHandler
 {

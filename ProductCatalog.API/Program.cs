@@ -1,4 +1,4 @@
-using ProductCatalog.API.Application.UseCases.CreateProduct;
+using ProductCatalog.Application.UseCases.CreateProduct;
 
 var builder = WebApplication.CreateBuilder(args);
 
