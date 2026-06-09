@@ -13,10 +13,11 @@ public class Product
     //Construtor
     public Product(string nome, string descricao, decimal preco, Guid userId)
     {
-        if (string.IsNullOrWhiteSpace(nome)) ;
-
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new AbandonedMutexException("Nome é obrigatorio");
+        
         if (preco <= 0)
-            throw new AggregateException("Preço deve ser maior que 0.");
+            throw new ArgumentException("Preço deve ser maior que 0.");
 
         Id = Guid.NewGuid();
         Nome = nome;
