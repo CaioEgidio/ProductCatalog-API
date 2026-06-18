@@ -152,7 +152,7 @@ GitHub:
 https://github.com/CaioEgidio
 
 LinkedIn:
-(Adicionar seu LinkedIn aqui)
+(https://www.linkedin.com/in/caio-egidio-7481aa281/)
 
 ---
 
