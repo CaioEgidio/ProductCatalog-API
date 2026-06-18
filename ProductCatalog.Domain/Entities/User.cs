@@ -2,7 +2,7 @@
 
 public class User
 {
-    // Atributos da classe 
+    // Atributos da classe / encapsulamento 
     public Guid Id { get; private set; }
     public string Nome { get; private set; }
     public string Email { get; private set; }
@@ -22,3 +22,4 @@ public class User
     
     
 }
+// utilizo encapsulamento, permito new product.id mas impesso product.id fora da classe 
