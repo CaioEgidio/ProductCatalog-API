@@ -11,6 +11,7 @@ public class ProductRepository : IProductRepository
 {
    // Guarda uma referência ao contexto do banco (EF Core).
    // É através dele que fazemos qualquer operação no banco de dados.
+   // Conexão com o banco
    private readonly AppDbContext _context; 
 
    // Construtor: recebe o AppDbContext "de fora" (injeção de dependência)
@@ -20,20 +21,23 @@ public class ProductRepository : IProductRepository
       _context = context;
    }
    
-   // Adiciona um novo produto ao banco de dados.
+   // Metodo que adiciona um novo produto ao banco de dados.
    public void Add(Product product)
    {
-      // Marca o produto como "novo" para ser inserido (ainda não salva no banco)
+      // Marca o produto como "novo" para ser inserido 
       _context.Products.Add(product);
       
-      // Aqui sim ele realmente grava no banco de dados (executa o INSERT).
+      //  grava no banco de dados (executa o INSERT).
       _context.SaveChanges();
    }
-   // Busca todos os produtos cadastrados no banco.
+   // Metodo que busca todos os produtos cadastrados no banco.
    public List<Product> GetAll()
    {
-      // ToList() executa a consulta no banco e traz todos os registros
+      // ToList() consulta o banco e traz todos os registros
       // da tabela Products como uma lista de objetos Product.
       return _context.Products.ToList();
    }
 }
+
+// Implementar o acesso ao banco usando Entity Framework.
+// Quem cumpre a lista de tarefas.

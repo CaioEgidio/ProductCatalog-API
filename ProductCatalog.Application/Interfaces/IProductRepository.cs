@@ -11,3 +11,6 @@ public interface IProductRepository
     // Retorna todos os produtos
     List<Product> GetAll();
 }
+
+//Define o contrato de acesso aos produtos.
+//Lista de tarefas.

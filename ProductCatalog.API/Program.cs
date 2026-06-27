@@ -18,7 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Registra o repositório: sempre que alguém pedir IProductRepository,
 // o .NET vai entregar uma instância de ProductRepository
+// Injeta o repositório
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 // Add services to the container.
 
 // Habilita o uso de Controllers (endpoints da API)
@@ -47,8 +49,9 @@ builder.Services.AddSwaggerGen(options =>
 
 
 // Registra o handler do caso de uso "criar produto"
+// Injeta o handler
 builder.Services.AddScoped<CreateProductHandler>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 
 // A partir daqui, a aplicação é "construída" com tudo que foi configurado acima
 var app = builder.Build();
