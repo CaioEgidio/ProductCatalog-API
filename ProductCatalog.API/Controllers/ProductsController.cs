@@ -1,39 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.Application.DTOs;
+using ProductCatalog.Application.Interfaces;
 using ProductCatalog.Application.UseCases.CreateProduct;
 using ProductCatalog.Domain.Entities;
+using ProductCatalog.Application.UseCases.GetAllProducts;
 
 namespace ProductCatalog.API.Controllers;
 
-[ApiController] // digo pro .net que isso é uma api 
+[ApiController] 
+
 [Route("products")] // defino a url base 
 public class ProductsController : ControllerBase
 {
-    private readonly CreateProductHandler _handler;
     
-    // Recebe o handler via injeção de dependência
-    public ProductsController(CreateProductHandler handler)
+    private readonly CreateProductHandler _createProductHandler;
+    
+    
+    private readonly GetAllProductsHandler _getAllProductsHandler;
+
+    // construtor do ProductsController, 0 .NET entrega os dois Handlers automaticamente, injeção de dependencia
+    public ProductsController(
+        CreateProductHandler createProductHandler,
+        GetAllProductsHandler getAllProductsHandler)
     {
-        _handler = handler;
+        _createProductHandler = createProductHandler;
+        _getAllProductsHandler = getAllProductsHandler;
     }
+//guardo os Handlers recebidos nos campos privados da classe
     
     [HttpGet] // Requisição do tipo GET
     public IActionResult Get()
     {
-        // Lista fixa só para teste (ainda não busca do banco)
-        var products = new List<Product>
-        {
-            new Product("Notebook", "Notebook gamer", 3500, Guid.NewGuid())
-        };
-        return Ok(products); // Retorna 200 com a lista
+        // Busca todos os produtos
+        var products = _getAllProductsHandler.Handle();
+
+        return Ok(products);
     }
 
     [HttpPost] // Define um requisição do tipo POST 
     public IActionResult Create([FromBody] CreateProductRequest request)
     {
-        // Pega os dados do corpo da requisição e cria o produto
-        var product = _handler.Handle(request);
-        return Ok(product); // Retorna 200 com o produto criado
+        
+        var product = _createProductHandler.Handle(request);
+
+        return Ok(product);
     }
 }
 

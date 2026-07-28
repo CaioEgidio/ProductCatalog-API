@@ -7,6 +7,7 @@ namespace ProductCatalog.Application.UseCases.CreateProduct;
 // Caso de uso: criar um produto
 public class CreateProductHandler
 {
+    
     private readonly IProductRepository _productRepository;
 
     // Recebe o repositório via injeção de dependência

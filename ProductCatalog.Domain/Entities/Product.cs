@@ -2,7 +2,7 @@
 
 public class Product
 {
-    //Metodos
+    //Propriedades 
     public Guid Id { get; private set; }
     public string Nome { get; private set; }
     public string Descricao { get; private set; }
@@ -24,8 +24,9 @@ public class Product
         Descricao = descricao;
         Preco = preco;
         UserId = userId;
-        DataCriacao = DateTime.Now;
+        DataCriacao = DateTime.UtcNow;
 
     }
 }
 
+//Postgree usa timestamp with time zone

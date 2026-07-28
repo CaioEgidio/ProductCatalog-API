@@ -1,6 +1,6 @@
 ﻿using ProductCatalog.Application.Interfaces;
 using ProductCatalog.Domain.Entities;
-using ProductCatalog.Infrastructure.Persistence;
+using ProductCatalog.Infrastructure.Persistence; 
 using Microsoft.EntityFrameworkCore;
 
 namespace ProductCatalog.Infrastructure.Repositories;

@@ -4,6 +4,7 @@ using ProductCatalog.Infrastructure.Persistence;
 using ProductCatalog.Application.UseCases.CreateProduct;
 using ProductCatalog.Application.Interfaces;
 using ProductCatalog.Infrastructure.Repositories;
+using ProductCatalog.Application.UseCases.GetAllProducts;
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
 var builder = WebApplication.CreateBuilder(args);
@@ -12,14 +13,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Registra o banco de dados (EF Core) usando SQL Server,
 // pegando a string de conexão do appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Builder objeto de configuração
+//Sempre que alguém pedir o GetAllProductsHandler, gerencie o ciclo de vida dele de forma Scoped
+builder.Services.AddScoped<GetAllProductsHandler>();
+
+// Injeta o repositório com injeção de dependencia
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<CreateProductHandler>();
 
 
 // Registra o repositório: sempre que alguém pedir IProductRepository,
 // o .NET vai entregar uma instância de ProductRepository
-// Injeta o repositório
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
 
 // Add services to the container.
 
