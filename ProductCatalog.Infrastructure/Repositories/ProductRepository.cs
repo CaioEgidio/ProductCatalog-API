@@ -15,7 +15,6 @@ public class ProductRepository : IProductRepository
    private readonly AppDbContext _context; 
 
    // Construtor: recebe o AppDbContext "de fora" (injeção de dependência)
-   // e guarda na variável _context para usar nos métodos abaixo.
    public ProductRepository(AppDbContext context)
    {
       _context = context;
@@ -37,7 +36,13 @@ public class ProductRepository : IProductRepository
       // da tabela Products como uma lista de objetos Product.
       return _context.Products.ToList();
    }
+
+   public Product? GetById(Guid id)
+   {
+      return _context.Products.FirstOrDefault(product => product.Id == id);
+   }
 }
+
 
 // Implementar o acesso ao banco usando Entity Framework.
 // Quem cumpre a lista de tarefas.

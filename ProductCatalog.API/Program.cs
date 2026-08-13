@@ -5,6 +5,9 @@ using ProductCatalog.Application.UseCases.CreateProduct;
 using ProductCatalog.Application.Interfaces;
 using ProductCatalog.Infrastructure.Repositories;
 using ProductCatalog.Application.UseCases.GetAllProducts;
+using ProductCatalog.Application.UseCases.GetProductById;
+using ProductCatalog.Application.UseCases.CreateUser;
+
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
 var builder = WebApplication.CreateBuilder(args);
@@ -19,16 +22,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Builder objeto de configuração
 //Sempre que alguém pedir o GetAllProductsHandler, gerencie o ciclo de vida dele de forma Scoped
 builder.Services.AddScoped<GetAllProductsHandler>();
+builder.Services.AddScoped<CreateProductHandler>();
+builder.Services.AddScoped<GetProductByIdHandler>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<CreateUserHandler>();
 
 // Injeta o repositório com injeção de dependencia
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<CreateProductHandler>();
 
 
 // Registra o repositório: sempre que alguém pedir IProductRepository,
 // o .NET vai entregar uma instância de ProductRepository
-
-
 
 // Add services to the container.
 
@@ -73,7 +77,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Redireciona requisições HTTP para HTTPS automaticamente
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 // Habilita verificação de autorização (ainda sem regras configuradas)
 app.UseAuthorization();

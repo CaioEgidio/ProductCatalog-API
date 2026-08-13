@@ -10,7 +10,11 @@ public interface IProductRepository
 
     // Retorna todos os produtos
     List<Product> GetAll();
+
+    // Busca um produto pelo ID.
+    Product? GetById(Guid id);
 }
 
 //Define o contrato de acesso aos produtos.
 //Lista de tarefas.
+

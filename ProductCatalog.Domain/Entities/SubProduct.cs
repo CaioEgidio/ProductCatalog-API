@@ -11,7 +11,7 @@ public class SubProduct
 //Construtor
     public SubProduct(string name, Guid producId, decimal precoAdicional)
     {
-        if (string.IsNullOrWhiteSpace("nome é obrigatorio"));
+        if (string.IsNullOrWhiteSpace("nome é obrigatorio"))
 
         if (precoAdicional < 0)
             throw new AggregateException("Preço adicional nao pode ser negativo");

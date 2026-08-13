@@ -3,7 +3,7 @@ using ProductCatalog.Domain.Entities;
 
 namespace ProductCatalog.Infrastructure.Persistence;
 
-public class AppDbContext : DbContext // Classe principal do entitiy framework, ponte entre C# e o banco 
+public class AppDbContext : DbContext 
 {
     
     // Construtor: recebe as configurações do banco (string de conexão, qual banco usar, etc.)
@@ -13,9 +13,11 @@ public class AppDbContext : DbContext // Classe principal do entitiy framework, 
     {
     }
     
-    // Representa a tabela "Products" no banco de dados.
-    // DbSet<Product> = cada item da lista é uma linha da tabela.
+    // Representa a tabela "Products" no banco de dados
     public DbSet<Product> Products { get; set; } // peço uma tabela chamada products 
+    
+    // Representa a tabela de usuarios
+    public DbSet<User> Users { get; set; } // peço uma tabela chamada users
 }
 
 // O EF vai usar isso para criar a tabela automaticamente na migration
