@@ -7,7 +7,8 @@ using ProductCatalog.Infrastructure.Repositories;
 using ProductCatalog.Application.UseCases.GetAllProducts;
 using ProductCatalog.Application.UseCases.GetProductById;
 using ProductCatalog.Application.UseCases.CreateUser;
-
+using ProductCatalog.Application.UseCases.GetAllUsers;
+using ProductCatalog.Application.UseCases.GetUserById;
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
 var builder = WebApplication.CreateBuilder(args);
@@ -21,11 +22,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //Builder objeto de configuração
 //Sempre que alguém pedir o GetAllProductsHandler, gerencie o ciclo de vida dele de forma Scoped
+builder.Services.AddScoped<GetAllUsersHandler>();
 builder.Services.AddScoped<GetAllProductsHandler>();
 builder.Services.AddScoped<CreateProductHandler>();
 builder.Services.AddScoped<GetProductByIdHandler>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<CreateUserHandler>();
+builder.Services.AddScoped<GetUserByIdHandler>();
 
 // Injeta o repositório com injeção de dependencia
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
