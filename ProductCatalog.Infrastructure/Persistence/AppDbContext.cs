@@ -18,6 +18,28 @@ public class AppDbContext : DbContext
     
     // Representa a tabela de usuarios
     public DbSet<User> Users { get; set; } // peço uma tabela chamada users
+    
+    // Representa a tabela de subprodutos
+    public DbSet<SubProduct> SubProducts { get; set; }
+
+    
+    
+    // Método executado pelo Entity Framework Core durante a criação/configuração
+    // do modelo do banco de dados.
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Mantém as configurações padrão do DbContext
+        base.OnModelCreating(modelBuilder);
+        
+        
+        // Procura automaticamente, nesta Assembly, todas as classes
+        // que implementam IEntityTypeConfiguration e aplica suas configurações.
+        //
+        // Exemplo:
+        // ProductConfiguration.cs → configuração da entidade Product
+        // SubProductConfiguration.cs → configuração da entidade SubProduct
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
+    }
 }
 
 // O EF vai usar isso para criar a tabela automaticamente na migration

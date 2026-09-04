@@ -9,33 +9,35 @@ using ProductCatalog.Application.UseCases.GetProductById;
 using ProductCatalog.Application.UseCases.CreateUser;
 using ProductCatalog.Application.UseCases.GetAllUsers;
 using ProductCatalog.Application.UseCases.GetUserById;
+using ProductCatalog.Application.UseCases.CreateSubProduct;
+
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
 var builder = WebApplication.CreateBuilder(args);
 
 
-// Registra o banco de dados (EF Core) usando SQL Server,
+// Registra o banco de dados (EF Core) usando PostgreSQL,
 // pegando a string de conexão do appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Builder objeto de configuração
-//Sempre que alguém pedir o GetAllProductsHandler, gerencie o ciclo de vida dele de forma Scoped
+
+// Registra os handlers dos casos de uso.
 builder.Services.AddScoped<GetAllUsersHandler>();
 builder.Services.AddScoped<GetAllProductsHandler>();
 builder.Services.AddScoped<CreateProductHandler>();
 builder.Services.AddScoped<GetProductByIdHandler>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<CreateUserHandler>();
 builder.Services.AddScoped<GetUserByIdHandler>();
+builder.Services.AddScoped<CreateSubProductHandler>();
 
-// Injeta o repositório com injeção de dependencia
+// Registra os repositórios.
+// Quando uma classe solicitar uma interface, o .NET
+// fornece a implementação correspondente.
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-
-// Registra o repositório: sempre que alguém pedir IProductRepository,
-// o .NET vai entregar uma instância de ProductRepository
+builder.Services.AddScoped<ISubProductRepository, SubProductRepository>();
 
 // Add services to the container.
 
@@ -56,17 +58,13 @@ builder.Services.AddSwaggerGen(options =>
         Description = "### Bem-vindo à API Product Catalog!\n\n" +
                       "API REST desenvolvida em .NET 8 para gerenciamento de produtos.\n\n" +
                       "* **Arquitetura:** DDD Simplificado\n" +
-                      "* **Tecnologias:** ASP.NET Core, Entity Framework Core e SQL Server\n" +
+                      "* **Tecnologias:** ASP.NET Core, Entity Framework Core e PostgreSQL\n" +
                       "* **Objetivo:** Praticar boas práticas de arquitetura, separação de responsabilidades e persistência de dados\n" +
                       "* **Status:** Em desenvolvimento"
         
     });
 });
 
-
-// Registra o handler do caso de uso "criar produto"
-// Injeta o handler
-builder.Services.AddScoped<CreateProductHandler>();
 
 
 // A partir daqui, a aplicação é "construída" com tudo que foi configurado acima
