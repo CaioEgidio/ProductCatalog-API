@@ -10,6 +10,8 @@ using ProductCatalog.Application.UseCases.CreateUser;
 using ProductCatalog.Application.UseCases.GetAllUsers;
 using ProductCatalog.Application.UseCases.GetUserById;
 using ProductCatalog.Application.UseCases.CreateSubProduct;
+using ProductCatalog.Application.UseCases.GetSubProductsByProduct;
+using ProductCatalog.Application.UseCases.GetSubProductsByProductId;
 
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
@@ -31,6 +33,8 @@ builder.Services.AddScoped<GetProductByIdHandler>();
 builder.Services.AddScoped<CreateUserHandler>();
 builder.Services.AddScoped<GetUserByIdHandler>();
 builder.Services.AddScoped<CreateSubProductHandler>();
+builder.Services.AddScoped<GetSubProductsByProductHandler>();
+builder.Services.AddScoped<GetSubProductsByProductIdHandler>();
 
 // Registra os repositórios.
 // Quando uma classe solicitar uma interface, o .NET
