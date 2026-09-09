@@ -1,22 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ProductCatalog.API.Extensions;
+using ProductCatalog.API.Middleware;
 using ProductCatalog.Infrastructure.Persistence;
-using ProductCatalog.Application.UseCases.CreateProduct;
-using ProductCatalog.Application.Interfaces;
-using ProductCatalog.Infrastructure.Repositories;
-using ProductCatalog.Application.UseCases.GetAllProducts;
-using ProductCatalog.Application.UseCases.GetProductById;
-using ProductCatalog.Application.UseCases.CreateUser;
-using ProductCatalog.Application.UseCases.GetAllUsers;
-using ProductCatalog.Application.UseCases.GetUserById;
-using ProductCatalog.Application.UseCases.CreateSubProduct;
-using ProductCatalog.Application.UseCases.GetSubProductsByProduct;
-using ProductCatalog.Application.UseCases.GetSubProductsByProductId;
+using FluentValidation;
+using ProductCatalog.Application.Validators;
 
 
 // Cria o "construtor" da aplicação, responsável por configurar tudo antes de rodar
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Registra o banco de dados (EF Core) usando PostgreSQL,
 // pegando a string de conexão do appsettings.json
@@ -24,26 +16,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddApplicationServices();
 
-// Registra os handlers dos casos de uso.
-builder.Services.AddScoped<GetAllUsersHandler>();
-builder.Services.AddScoped<GetAllProductsHandler>();
-builder.Services.AddScoped<CreateProductHandler>();
-builder.Services.AddScoped<GetProductByIdHandler>();
-builder.Services.AddScoped<CreateUserHandler>();
-builder.Services.AddScoped<GetUserByIdHandler>();
-builder.Services.AddScoped<CreateSubProductHandler>();
-builder.Services.AddScoped<GetSubProductsByProductHandler>();
-builder.Services.AddScoped<GetSubProductsByProductIdHandler>();
-
-// Registra os repositórios.
-// Quando uma classe solicitar uma interface, o .NET
-// fornece a implementação correspondente.
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ISubProductRepository, SubProductRepository>();
-
-// Add services to the container.
+// Procura e registra automaticamente todos os Validators
+// existentes no projeto Application.
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
 
 // Habilita o uso de Controllers (endpoints da API)
 builder.Services.AddControllers();
@@ -73,6 +50,8 @@ builder.Services.AddSwaggerGen(options =>
 
 // A partir daqui, a aplicação é "construída" com tudo que foi configurado acima
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Só habilita Swagger se estiver rodando em ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
