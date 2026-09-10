@@ -1,6 +1,9 @@
-﻿namespace ProductCatalog.Domain.Entities;
+﻿using ProductCatalog.Domain.Exceptions;
+using ProductCatalog.Domain.Interfaces;
 
-public class Product
+namespace ProductCatalog.Domain.Entities;
+
+public class Product : IEntity
 {
     //Propriedades 
     public Guid Id { get; private set; }
@@ -14,10 +17,10 @@ public class Product
     public Product(string nome, string descricao, decimal preco, Guid userId)
     {
         if (string.IsNullOrWhiteSpace(nome))
-            throw new AbandonedMutexException("Nome é obrigatorio");
+            throw new DomainException("Nome é obrigatório");
         
         if (preco <= 0)
-            throw new ArgumentException("Preço deve ser maior que 0.");
+            throw new DomainException("Preço deve ser maior que 0.");
 
         Id = Guid.NewGuid();
         Nome = nome;

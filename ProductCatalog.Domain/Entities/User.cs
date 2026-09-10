@@ -1,6 +1,9 @@
-﻿namespace ProductCatalog.Domain.Entities;
+﻿using ProductCatalog.Domain.Exceptions;
+using ProductCatalog.Domain.Interfaces;
 
-public class User
+namespace ProductCatalog.Domain.Entities;
+
+public class User : IEntity
 {
     // Atributos da classe / encapsulamento 
     public Guid Id { get; private set; }
@@ -18,11 +21,11 @@ public class User
     public User(string nome, string email)
     {
         if (string.IsNullOrWhiteSpace(nome))
-            throw new ArgumentException("O nome é obrigatario");
+            throw new DomainException("O nome é obrigatario");
 
         if (string.IsNullOrEmpty(email))
         {
-            throw new ArgumentException("O email é obrigatorio.");
+            throw new DomainException("O email é obrigatorio.");
         }
         
         Id = Guid.NewGuid();

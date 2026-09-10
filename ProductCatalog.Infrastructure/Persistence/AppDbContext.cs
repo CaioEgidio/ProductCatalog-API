@@ -38,7 +38,7 @@ public class AppDbContext : DbContext
         // Exemplo:
         // ProductConfiguration.cs → configuração da entidade Product
         // SubProductConfiguration.cs → configuração da entidade SubProduct
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }
 

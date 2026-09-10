@@ -1,7 +1,10 @@
-﻿namespace ProductCatalog.Domain.Entities;
+﻿using ProductCatalog.Domain.Exceptions;
+using ProductCatalog.Domain.Interfaces;
+
+namespace ProductCatalog.Domain.Entities;
 
 //Metodos
-public class SubProduct
+public class SubProduct : IEntity
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
@@ -12,10 +15,10 @@ public class SubProduct
     public SubProduct(string name, Guid productId, decimal precoAdicional)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("nome é obrigatorio");
+            throw new DomainException("nome é obrigatorio");
 
         if (precoAdicional < 0)
-            throw new ArgumentException("Preço adicional nao pode ser negativo");
+            throw new DomainException("Preço adicional nao pode ser negativo");
 
         Name = name;
         ProductId = productId;
