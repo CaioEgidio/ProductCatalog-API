@@ -22,14 +22,17 @@ public class SubProductsController : ControllerBase
 
     // Cria um novo SubProduct.
     [HttpPost]
-    public IActionResult Create(CreateSubProductRequest request)
+    [Route("/products/{productId:guid}/subproducts")]
+    public IActionResult Create(Guid productId,CreateSubProductRequest request)
     {
+        request.ProductId = productId;
+        
         var subProduct = _createSubProductHandler.Handle(request);
 
         return Ok(subProduct);
     }
 
-    [HttpGet]
+    [HttpGet("/products/{productId:guid}/subproducts")]
     public IActionResult GetByproductId(Guid productId)
     {
         var subProduct = _getSubProductsByProductIdHandler.Handle(productId);
@@ -37,3 +40,6 @@ public class SubProductsController : ControllerBase
         return Ok(subProduct);
     }
 }
+
+
+

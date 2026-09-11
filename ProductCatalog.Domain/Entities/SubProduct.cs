@@ -14,6 +14,9 @@ public class SubProduct : IEntity
 //Construtor
     public SubProduct(string name, Guid productId, decimal precoAdicional)
     {
+        
+        Id = Guid.NewGuid();
+        
         if (string.IsNullOrWhiteSpace(name))
             throw new DomainException("nome é obrigatorio");
 
