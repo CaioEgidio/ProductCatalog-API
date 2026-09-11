@@ -208,7 +208,7 @@ Regras:
 
 ---
 
-# 🔗 Endpoints
+# Endpoints
 
 ## Users
 
