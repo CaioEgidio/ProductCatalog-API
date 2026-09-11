@@ -497,9 +497,8 @@ ProductCatalog-API/
 ├── ProductCatalog.Application/
 │   ├── DTOs/
 │   ├── Interfaces/
-│   ├── UseCases/
-│   ├── Validators/
-│   └── Services/
+│   ├── UseCases/     
+│   └── Validators/
 │
 ├── ProductCatalog.Domain/
 │   ├── Entities/
